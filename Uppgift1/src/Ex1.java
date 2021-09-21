@@ -1,14 +1,18 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-
 import javax.swing.UIManager;
 import javax.swing.JOptionPane;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
-
 import java.util.Random;
 
+/**
+ *
+ *  Luka Alhonen,
+ *	Amos Weckström
+ *
+ **/
 
 public class Ex1 {
     private static final int WIDTH = 800;  // Size of the window in pixels
