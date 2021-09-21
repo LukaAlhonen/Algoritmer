@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -52,6 +53,7 @@ class MazeComponent extends JComponent {
     protected int cells;
     protected int cellWidth;
     protected int cellHeight;
+	protected int[] arr_cells;
     Random random;
 
     // Draw a maze of size w*h with c*c cells
@@ -89,11 +91,99 @@ class MazeComponent extends JComponent {
     }
 
     private void createMaze (int cells, Graphics g) {
-	
 	// This is what you write
-	
+		random = new Random();
+		arr_cells = new int[cells*cells];
+		for(int i = 0; i < arr_cells.length; i++){
+			arr_cells[i] = -1;
+		}
+		for(int i = 0; i < arr_cells.length; i++){
+			traverse(i, random, g);
+
+		}
+
     }
 
+	private int traverse(int i, Random random, Graphics g){
+		int i_x = i%20;
+		int i_y = i/20;
+		int rng;
+		int j;
+		while(true){
+			j = 0;
+			rng = random.nextInt(4);
+			System.out.println(i_y + " i_y\n" + i_x + " i_x\nrng " + rng);
+			if(i == 0 && (rng == 0 || rng == 1)) {
+				continue;
+			} else if(i == cells -1 && (rng == 1 || rng == 2)){
+				continue;
+			} else if(i == cells * cells - cells && (rng == 0 || rng == 3)){
+				continue;
+			} else if(i == cells * cells -1 && (rng == 2 || rng == 3)){
+				continue;
+			} else if(i_x == 0 && rng == 0){
+				continue;
+			} else if(i_x == cells -1 && rng == 2){
+				continue;
+			} else if(i_y == 0 && rng == 1){
+				continue;
+			} else if(i_y == cells -1 && rng == 3){
+				continue;
+			} else{
+				System.out.println(i + "\n" + j + "\n" + rng);
+				switch (rng) {
+					case 0 -> {
+						j = i - 1;
+						System.out.println(j + " 0");
+					}
+					case 1 -> {
+						j = i - 20;
+						System.out.println(j + " 1");
+					}
+					case 2 -> {
+						j = i + 1;
+						System.out.println(j + " 2");
+					}
+					case 3 -> {
+						j = i + 20;
+						System.out.println(j + " 3");
+					}
+					default -> {
+					}
+				}
+				if(find(i) == find(j)){
+					continue;
+				}
+				union(i, j);
+				drawWall(i_x, i_y, rng, g);
+				break;
+			}
+		}
+		return rng;
+	}
+
+	private int find(int cell){
+		try {
+			if (arr_cells[cell] < 0) {
+				return cell;
+			}
+			return arr_cells[cell] = find(arr_cells[cell]);
+		} catch(StackOverflowError e){
+			e.printStackTrace();
+		}
+
+		return 0;
+	}
+
+	private void union(int rot1, int rot2){
+		if(arr_cells[rot2] <= arr_cells[rot1]){
+			arr_cells[rot2] += arr_cells[rot1];
+			arr_cells[rot1] = rot2;
+		} else{
+			arr_cells[rot1] += arr_cells[rot2];
+			arr_cells[rot2] = rot1;
+		}
+	}
 
     // Paints the interior of the cell at postion x,y with colour c
     private void paintCell(int x, int y, Color c, Graphics g) {
