@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
-import java.util.Arrays;
 import java.util.Random;
 
 
@@ -91,17 +90,14 @@ class MazeComponent extends JComponent {
     }
 
     private void createMaze (int cells, Graphics g) {
-	// This is what you write
 		random = new Random();
 		arr_cells = new int[cells*cells];
 		for(int i = 0; i < arr_cells.length; i++){
 			arr_cells[i] = -1;
 		}
-		for(int i = 0; i < arr_cells.length; i++){
+		for (int i = 0; i < arr_cells.length; i++) {
 			traverse(i, random, g);
-
 		}
-
     }
 
 	private int traverse(int i, Random random, Graphics g){
@@ -110,9 +106,13 @@ class MazeComponent extends JComponent {
 		int rng;
 		int j;
 		while(true){
-			j = 0;
+			j = 0; // Cell to perform union with
 			rng = random.nextInt(4);
-			System.out.println(i_y + " i_y\n" + i_x + " i_x\nrng " + rng);
+			// Check if last cell is in same set with neighbouring cells
+			if (i == (cells * cells - 1) && (find(i) == find(i-1) && find(i) == find(i-20))){
+				break;
+			}
+			// Make sure not to remove outer wall
 			if(i == 0 && (rng == 0 || rng == 1)) {
 				continue;
 			} else if(i == cells -1 && (rng == 1 || rng == 2)){
@@ -130,29 +130,25 @@ class MazeComponent extends JComponent {
 			} else if(i_y == cells -1 && rng == 3){
 				continue;
 			} else{
-				System.out.println(i + "\n" + j + "\n" + rng);
 				switch (rng) {
 					case 0 -> {
 						j = i - 1;
-						System.out.println(j + " 0");
 					}
 					case 1 -> {
 						j = i - 20;
-						System.out.println(j + " 1");
 					}
 					case 2 -> {
 						j = i + 1;
-						System.out.println(j + " 2");
 					}
 					case 3 -> {
 						j = i + 20;
-						System.out.println(j + " 3");
 					}
 					default -> {
 					}
 				}
-				if(find(i) == find(j)){
-					continue;
+				// Check if i and j belong to same set, if not, perform union and remove wall
+				if (find(i) == find(j)) {
+						continue;
 				}
 				union(i, j);
 				drawWall(i_x, i_y, rng, g);
@@ -163,25 +159,28 @@ class MazeComponent extends JComponent {
 	}
 
 	private int find(int cell){
-		try {
-			if (arr_cells[cell] < 0) {
-				return cell;
-			}
+		if (arr_cells[cell] < 0) {
+			return cell;
+		} else {
 			return arr_cells[cell] = find(arr_cells[cell]);
-		} catch(StackOverflowError e){
-			e.printStackTrace();
 		}
-
-		return 0;
 	}
 
 	private void union(int rot1, int rot2){
 		if(arr_cells[rot2] <= arr_cells[rot1]){
-			arr_cells[rot2] += arr_cells[rot1];
-			arr_cells[rot1] = rot2;
+			if (arr_cells[rot1] > -1){
+				union(arr_cells[rot1], rot2);
+			} else {
+				arr_cells[rot2] += arr_cells[rot1];
+				arr_cells[rot1] = rot2;
+			}
 		} else{
-			arr_cells[rot1] += arr_cells[rot2];
-			arr_cells[rot2] = rot1;
+			if (arr_cells[rot2] > -1) {
+				union(rot1, arr_cells[rot2]);
+			} else {
+				arr_cells[rot1] += arr_cells[rot2];
+				arr_cells[rot2] = rot1;
+			}
 		}
 	}
 
