@@ -96,6 +96,7 @@ class MazeComponent extends JComponent {
     private void createMaze (int cells, Graphics g) {
 		random = new Random();
 		arr_cells = new int[cells*cells];
+		System.out.println(arr_cells.length);
 		for(int i = 0; i < arr_cells.length; i++){
 			arr_cells[i] = -1;
 		}
@@ -105,8 +106,8 @@ class MazeComponent extends JComponent {
     }
 
 	private int traverse(int i, Random random, Graphics g){
-		int i_x = i%20;
-		int i_y = i/20;
+		int i_x = i%cells;
+		int i_y = i/cells;
 		int rng;
 		int j;
 		while(true){
@@ -139,18 +140,23 @@ class MazeComponent extends JComponent {
 						j = i - 1;
 					}
 					case 1 -> {
-						j = i - 20;
+						j = i - cells;
 					}
 					case 2 -> {
 						j = i + 1;
 					}
 					case 3 -> {
-						j = i + 20;
+						j = i + cells;
 					}
 					default -> {
 					}
 				}
 				// Check if i and j belong to same set, if not, perform union and remove wall
+
+				if(j>cells*cells){
+					System.out.println("j = " + j);
+					System.out.println("i = " + i);
+				}
 				if (find(i) == find(j)) {
 						continue;
 				}
