@@ -1,0 +1,5 @@
+;Felaktig graf, innehåller cykel (F-C-E-F)
+[Vertex]
+A,B,C,D,E,F,G
+[Edges]
+A:B,A:C,A:D,B:C,B:E,B:G,C:E,C:D,G:E,E:D,E:F,D:F,F:C

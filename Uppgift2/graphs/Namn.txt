@@ -1,0 +1,8 @@
+Graf med namn 
+
+[Vertex]
+Anders, Berit, Christel, Dani,       Eva    , Fredrik, Greta
+[Edges]
+Anders  :  Berit,    Anders:Christel,  Anders:Dani, Berit:Christel,
+Berit:Eva, Berit:Greta, Christel:Eva, Christel:Dani, Greta:Eva,
+Eva:Dani, Eva:Fredrik, Dani:Fredrik

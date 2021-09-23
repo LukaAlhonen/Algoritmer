@@ -1,0 +1,5 @@
+Graf från uppgiften maximalt flöde
+[Vertex]
+A,B,C,D,E,F,G,H,I,t,s
+[Edges]
+s:A,s:G,s:D,A:B,B:C,C:t,D:A,G:D,G:E,H:E,E:F,H:I,I:F,F:t,I:t,A:E,G:H,E:I,E:C,D:E,F:C

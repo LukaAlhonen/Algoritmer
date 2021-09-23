@@ -1,0 +1,15 @@
+Exempelgraf med ett antal stader
+
+[Vertex]
+Turku, Salo, Helsingfors, Porvoo, Raumo, Pori, Mikkeli,
+Tammerfors, Forssa, Tavastehus, Lahtis, Kotka, Villmanstrand, Imatra
+
+[Edges]
+Turku:Salo,  Turku:Raumo,  Raumo:Pori,  Raumo:Forssa,  Pori:Tammerfors,
+Tammerfors:Tavastehus, Tavastehus:Lahtis,
+Lahtis:Villmanstrand, Salo:Helsingfors,  Helsingfors:Porvoo,
+Porvoo:Villmanstrand,  Salo:Forssa,  Forssa:Tammerfors, Mikkeli:Imatra,
+Helsingfors:Lahtis, Tammerfors:Lahtis, Helsingfors:Kotka, Lahtis:Mikkeli,
+Villmanstrand:Kotka, Villmanstrand: Imatra, Kotka: Imatra
+
+
