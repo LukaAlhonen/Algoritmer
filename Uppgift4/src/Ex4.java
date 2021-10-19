@@ -24,6 +24,17 @@ public final class Ex4 {
 			w[j] = (String) tmp;
 		}
     }
+
+	private static void insertionSort(Comparable [] w, int left, int right){
+		int j;
+		for(int i = left+1; i < right+1; i++){
+			Comparable tmp = w[i];
+			for(j = i; j > left && tmp.compareTo(w[j - 1]) < 0; j--){
+				w[j] = w[j-1];
+			}
+			w[j] = (String) tmp;
+		}
+	}
     
     public static void mergeSort(String[] w) {
 		Comparable [] tmpArray = new Comparable[w.length];
@@ -63,9 +74,53 @@ public final class Ex4 {
 
 
     public static void quickSort (String[] w) {
-
+		quickSort(w, 0, w.length - 1);
     }
 
+	private static void quickSort(Comparable [] w, int left, int right){
+		int CUTOFF = 20;
+
+		if((left + CUTOFF) <= right){
+			Comparable pivot = median3(w, left, right);
+			int i = left, j = right - 1;
+			for( ; ; ){
+				while(w[++i].compareTo(pivot) < 0){}
+				while(w[--j].compareTo(pivot) > 0){}
+				if(i < j){
+					swapReferences(w, i, j);
+
+				} else{
+					break;
+				}
+			}
+			swapReferences(w, i, right - 1);
+			quickSort(w, left, i - 1);
+			quickSort(w, i + 1, right);
+		} else{
+			insertionSort(w, left, right);
+		}
+	}
+
+	private static Comparable median3(Comparable [] w, int left, int right){
+		int center = (left + right) / 2;
+		if(w[center].compareTo(w[left]) < 0){
+			swapReferences(w, left, center);
+		}
+		if(w[right].compareTo(w[left]) < 0){
+			swapReferences(w, left, right);
+		}
+		if(w[right].compareTo(w[center]) < 0){
+			swapReferences(w, center, right);
+		}
+		swapReferences(w, center, right - 1);
+		return w[right - 1];
+	}
+
+	private static void swapReferences(Comparable [] w, int left, int right){
+		Comparable temp = w[right];
+		w[right] = w[left];
+		w[left] = temp;
+	}
     
     public static String[] readWords(String fileName) {
     	String[] words = new String[MAXSIZE];
