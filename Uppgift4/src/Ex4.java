@@ -10,6 +10,10 @@ import java.util.Arrays;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
+/**
+ * Luka Alhonen, Amos Weckström
+ */
+
 public final class Ex4 {
     private static final int MAXSIZE = 1000000;  // Max nr of words
     private static final int CUTOFF = 20;       // Cut-off for recursive quicksort
