@@ -1,4 +1,8 @@
-
+/*
+*
+* Luka Alhonen, Amos Weckström
+*
+ */
 import java.util.*;
 import java.io.IOException;
 import java.io.BufferedReader;

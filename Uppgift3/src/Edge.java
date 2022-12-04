@@ -1,9 +1,12 @@
 public class Edge {
-    Node node1;
-    Node node2;
-    Edge(Node node1, Node node2){
-        this.node1 = node1;
-        this.node2 = node2;
+    private Node src;
+    private Node dest;
+    Edge(Node src, Node dest){
+        this.src = src;
+        this.dest = dest;
     }
 
+    public Node Src(){ return src; }
+
+    public Node Dest(){ return dest; }
 }
